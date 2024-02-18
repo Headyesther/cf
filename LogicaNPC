@@ -1,0 +1,101 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
+
+public class LogicaNPC : MonoBehaviour
+{
+
+    public GameObject simboloMision;
+    public GameObject panelNPC;
+    public GameObject panelNPC2;
+    public GameObject panelNPCMision;
+    public TextMeshProUGUI textoMision;
+    public GameObject panelNPCProcesoP2;
+    public bool jugadorCerca; //saber si el jugador esta cerca
+    public bool aceptarMision; // si no 
+    public GameObject[] objetivos;
+    public int numDeobjetivos;
+    public GameObject botonDeMision;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //verifica el npc
+        jugadorCerca = GameObject.FindGameObjectWithTag("Player");
+        simboloMision.SetActive(true);
+        panelNPC.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            panelNPC.SetActive(false);
+            panelNPC2.SetActive(true);
+        }
+    }
+
+
+
+    //area de la esfera
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            jugadorCerca = true;
+
+            if (aceptarMision == false)
+            {
+                panelNPC.SetActive(true);
+            }
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            jugadorCerca = false;
+            panelNPC.SetActive(false);
+            panelNPC2.SetActive(false);
+            panelNPCMision.SetActive(false);
+            panelNPCProcesoP2.SetActive(false);
+
+        }
+    }
+
+    public void No()
+    {
+
+        panelNPC2.SetActive(false);
+        panelNPC.SetActive(false);
+    }
+
+    public void Si()
+    {
+
+        jugadorCerca = false;
+        simboloMision.SetActive(false);
+        panelNPC2.SetActive(false);
+        panelNPC.SetActive(false);
+        panelNPCMision.SetActive(true);
+
+    }
+
+    public void ProcesoP2()
+    {
+        panelNPCMision.SetActive(false);
+        panelNPCProcesoP2.SetActive(true);
+    }
+
+    public void examen()
+    {
+        panelNPCProcesoP2.SetActive(false);
+        Application.OpenURL("https://forms.gle/RvYaeGa3NLiWXxQT9");
+    }
+}
