@@ -1,0 +1,92 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
+
+public class LogicaNPC_CASAVERDE : MonoBehaviour
+{
+    public GameObject simboloMision;
+    public GameObject panelNPC;
+    public GameObject panelNPC_SN;
+    public GameObject panelNPCMision;
+
+    public bool jugadorCerca; //saber si el jugador esta cerca
+    public bool aceptarMision; // si no 
+    // Start is called before the first frame update
+    void Start()
+    {
+        //verifica el npc
+        jugadorCerca = GameObject.FindGameObjectWithTag("Player");
+        simboloMision.SetActive(true);
+        panelNPC.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            panelNPC.SetActive(false);
+            panelNPC_SN.SetActive(true);
+        }
+    }
+
+
+
+    //area de la esfera
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            jugadorCerca = true;
+
+            if (aceptarMision == false)
+            {
+                panelNPC.SetActive(true);
+            }
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            jugadorCerca = false;
+            panelNPC.SetActive(false);
+            panelNPC_SN.SetActive(false);
+            panelNPCMision.SetActive(false);
+
+        }
+    }
+
+    public void No()
+    {
+        panelNPC_SN.SetActive(false);
+        panelNPC.SetActive(false);
+        panelNPCMision.SetActive(false);
+    }
+
+    public void Si()
+    {
+
+        jugadorCerca = false;
+        simboloMision.SetActive(false);
+        panelNPC_SN.SetActive(false);
+        panelNPC.SetActive(false);
+        panelNPCMision.SetActive(true);
+
+    }
+
+    public void ubicacion()
+    {
+        Application.OpenURL("https://maps.app.goo.gl/uYR1xKMboQyqwid46");
+    }
+
+    public void foto()
+    {
+        Application.OpenURL("https://www.google.com/maps/place/La+Casona+Del+Cuy/@-1.6526362,-78.667391,3a,75y,19.75h,84.95t/data=!3m6!1e1!3m4!1seXARjXiYiKSwFVc1LLBYBQ!2e0!7i13312!8i6656!4m17!1m7!3m6!1s0x91d307f37433b1bb:0xa28b69e4e98fd2ce!2sMUNDOTRONIC!8m2!3d-1.6525586!4d-78.6679983!16s%2Fg%2F11fclcfh5v!3m8!1s0x91d307faa44de82b:0x4677e5f327599e15!8m2!3d-1.6525354!4d-78.6673362!10e5!14m1!1BCgIgAQ!16s%2Fg%2F11g8_2gdkr?entry=ttu");
+    }
+}
