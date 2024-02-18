@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
+using UnityEditor.VersionControl;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEditor.SceneManagement;
+using UnityEngine.Assertions;
+
+public class MyTest
+{
+
+    private GameObject oval;
+    private GameObject lizar;
+    [SetUp]
+    public void SetUp()
+    {
+        EditorSceneManager.LoadScene("SampleScene");
+        oval = GameObject.Find("Ovalo ubicacion");
+        lizar = GameObject.Find("LIzarzaburu avenida ubicacion");
+    }
+
+
+    [UnityTest]
+    public IEnumerator OvalIsOverLizar()
+    {
+        yield return null;
+        Assert.That(oval.transform.position.y > lizar.transform.position.y);
+
+    }
+
+
+    [TearDown]
+    public void Teardown()
+    {
+        EditorSceneManager.UnloadScene("SampleScene");
+    }
+}
